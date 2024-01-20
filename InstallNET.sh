@@ -669,6 +669,7 @@ mount.ntfs-3g \$(list-devices partition |head -n1) /mnt; \
 cd '/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs'; \
 cd Start* || cd start*; \
 cp -f '/net.bat' './net.bat'; \
+/bin/sh; \
 /sbin/reboot; \
 umount /media || true; \
 
