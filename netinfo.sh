@@ -105,12 +105,11 @@ get_net_info() {
   echo
   cecho G "============================================================================================"
   echo -n "Interface: "; cecho G "$dev"
-  echo -n "      MAC: "; cecho G "$mac"
-  echo -n "  IP Addr: "; cecho G "$ip"
-  echo -n " Net Mask: "; cecho G "$msk"
-  echo -n "  Gateway: "; cecho G "$gw"
-  echo -n "     CIDR: "; cecho G "$ip/$prefix"
-  echo -n "   Subnet: "; cecho G "$net/$prefix"
+  echo -n " MAC Addr: "; cecho G "$mac"
+  echo -n "IPv4 Addr: "; cecho G "$ip"
+  echo -n "IPv4 Mask: "; cecho G "$msk"
+  echo -n "  IPv4 GW: "; cecho G "$gw"
+  echo -n "IPv4 CIDR: "; cecho G "$ip/$prefix"
   cecho G "============================================================================================"
   echo
   cecho Y "For https://moeclub.org/attachment/LinuxShell/InstallNET.sh"
