@@ -8,6 +8,34 @@ net=
 prefix=
 __prefix=
 
+# https://github.com/ppo/bash-colors
+#
+# x - Set  2x - Reset           3x - Foreground    4x - Backgroud
+# [C]yan   [M]agenta  [Y]ellow  blac[K]   [W]hite  [R]ed  [G]reen  [B]lue
+# bold([S]trong)      [I]talic  [U]nderline        blink([F]lash)  [N]egative
+#
+c() {
+  if [ $# == 0 ]; then
+    printf "\e[0m"
+  else
+    printf "%s" "$1" | sed \
+      -e 's/\(.\)/\1;/g' \
+      -e 's/\([SIUFN]\)/2\1/g' \
+      -e 's/\([KRGYBMCW]\)/3\1/g' \
+      -e 's/\([krgybmcw]\)/4\1/g' \
+      -e 'y/SIUFNsiufnKRGYBMCWkrgybmcw/13457134570123456701234567/' \
+      -e 's/^\(.*\);$/\\e[\1m/g'
+  fi
+}
+
+cecho() {
+  echo -e "$(c "$1")${2}\e[0m"
+}
+
+cecho_n() {
+  echo -n -e "$(c "$1")${2}\e[0m"
+}
+
 ip_to_int() {
   IFS=. read -r i j k l <<< "$1"
   printf "%d" $(((i << 24) + (j << 16) + (k << 8) + l))
@@ -75,23 +103,23 @@ get_net_info() {
   net_int=$((msk_int & ip_int))
   net=$(int_to_ip "$net_int")
   echo
-  echo "============================================================================================"
-  echo "Interface: $dev"
-  echo "      MAC: $mac"
-  echo "  IP Addr: $ip"
-  echo " Net Mask: $msk"
-  echo "  Gateway: $gw"
-  echo "     CIDR: $ip/$prefix"
-  echo "   Subnet: $net/$prefix"
-  echo "============================================================================================"
+  cecho G "============================================================================================"
+  echo -n "Interface: "; cecho G "$dev"
+  echo -n "      MAC: "; cecho G "$mac"
+  echo -n "  IP Addr: "; cecho G "$ip"
+  echo -n " Net Mask: "; cecho G "$msk"
+  echo -n "  Gateway: "; cecho G "$gw"
+  echo -n "     CIDR: "; cecho G "$ip/$prefix"
+  echo -n "   Subnet: "; cecho G "$net/$prefix"
+  cecho G "============================================================================================"
   echo
-  echo "For https://moeclub.org/attachment/LinuxShell/InstallNET.sh"
+  cecho Y "For https://moeclub.org/attachment/LinuxShell/InstallNET.sh"
   echo
-  echo "--ip-addr $ip --ip-gate $gw --ip-mask $msk"
+  cecho C "--ip-addr $ip --ip-gate $gw --ip-mask $msk"
   echo
-  echo "For https://raw.githubusercontent.com/bohanyang/debi/master/debi.sh"
+  cecho Y "For https://raw.githubusercontent.com/bohanyang/debi/master/debi.sh"
   echo
-  echo "--ip $ip --gateway $gw --netmask $msk"
+  cecho C "--ip $ip --gateway $gw --netmask $msk"
   echo
 }
 
@@ -131,7 +159,8 @@ main() {
   get_net_info
 
   if [ "${__prefix}" = 32 ]; then
-    read -r -p "Do you want to test information [y/N]? " answer
+    cecho_n Gk "Do you want to test information [y/N]? "
+    read -r answer
     case ${answer:0:1} in
       y | Y) test_net_info ;;
     esac
