@@ -104,13 +104,13 @@ get_net_info() {
   net=$(int_to_ip "$net_int")
   echo
   cecho G "============================================================================================"
-  echo -n "Interface: "; cecho G "$dev"
-  echo -n " MAC Addr: "; cecho G "$mac"
+  echo -n "Network Card: "; cecho G "$dev"
+  echo -n " MAC Address: "; cecho G "$mac"
   cecho G "============================================================================================"
-  echo -n "IPv4 CIDR: "; cecho G "$ip/$prefix"
-  echo -n "IPv4 Addr: "; cecho G "$ip"
-  echo -n "IPv4 Mask: "; cecho G "$msk"
-  echo -n "IPv4   GW: "; cecho G "$gw"
+  echo -n "IPv4    CIDR: "; cecho G "$ip/$prefix"
+  echo -n "IPv4 Address: "; cecho G "$ip"
+  echo -n "IPv4 Netmask: "; cecho G "$msk"
+  echo -n "IPv4 Gateway: "; cecho G "$gw"
   cecho G "============================================================================================"
   echo
   cecho Y "For https://moeclub.org/attachment/LinuxShell/InstallNET.sh"
